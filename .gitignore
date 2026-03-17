@@ -1,0 +1,11 @@
+node_modules/
+dist/
+release/
+.DS_Store
+*.swp
+*~
+.env
+.wechat_db_keys.json
+*.key
+*.pem
+.claude/

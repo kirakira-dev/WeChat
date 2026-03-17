@@ -1,0 +1,507 @@
+/* ── Moments Timeline ── */
+
+.moments-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  animation: fadeIn var(--dur-normal) var(--ease-smooth);
+}
+
+/* ── Cover banner ── */
+
+.moments-cover {
+  position: relative;
+  height: 180px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #1a3a2a 0%, #0d2818 40%, #1a1a2e 100%);
+  overflow: hidden;
+}
+
+.moments-cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(18, 186, 84, 0.15), transparent 60%),
+    radial-gradient(ellipse at 70% 60%, rgba(18, 186, 84, 0.08), transparent 50%);
+}
+
+.moments-cover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(transparent, var(--color-chatlist-bg));
+}
+
+.moments-cover-profile {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 2;
+}
+
+.moments-cover-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  margin-bottom: 4px;
+}
+
+/* ── Toolbar ── */
+
+.moments-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  flex-shrink: 0;
+}
+
+.moments-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.moments-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary-text);
+}
+
+.moments-count {
+  font-size: 11px;
+  color: var(--color-secondary-text);
+}
+
+.moments-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.moments-tool-btn {
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--color-secondary-text);
+  transition: background var(--dur-fast) var(--ease-smooth), color var(--dur-fast) var(--ease-smooth), transform var(--dur-fast) var(--ease-spring);
+}
+
+.moments-tool-btn:hover {
+  background: rgba(128, 128, 128, 0.12);
+  color: var(--color-primary-text);
+  transform: scale(1.05);
+}
+
+.moments-tool-btn:active {
+  transform: scale(0.95);
+}
+
+.moments-tool-btn.refreshing svg {
+  animation: spin 0.8s linear infinite;
+}
+
+/* ── Compose area ── */
+
+.moments-compose {
+  padding: 0 12px 8px;
+  animation: fadeInUp var(--dur-normal) var(--ease-spring);
+}
+
+.moments-compose-inner {
+  display: flex;
+  gap: 8px;
+  background: rgba(128, 128, 128, 0.06);
+  border: 1px solid rgba(128, 128, 128, 0.08);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  transition: border-color var(--dur-normal) var(--ease-smooth), box-shadow var(--dur-normal) var(--ease-smooth);
+}
+
+.moments-compose-inner:focus-within {
+  border-color: rgba(18, 186, 84, 0.3);
+  box-shadow: 0 0 0 3px rgba(18, 186, 84, 0.06);
+}
+
+.moments-compose-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-primary-text);
+  font-family: inherit;
+  font-size: 12px;
+  resize: none;
+  min-height: 32px;
+  max-height: 80px;
+}
+
+.moments-compose-input::placeholder {
+  color: var(--color-secondary-text);
+  opacity: 0.6;
+}
+
+.moments-compose-send {
+  align-self: flex-end;
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--color-wechat-green);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  transition: background var(--dur-fast) var(--ease-smooth), transform var(--dur-fast) var(--ease-spring), opacity var(--dur-fast) var(--ease-smooth);
+}
+
+.moments-compose-send:hover {
+  background: var(--color-wechat-dark-green);
+  transform: scale(1.05);
+}
+
+.moments-compose-send:active {
+  transform: scale(0.95);
+}
+
+.moments-compose-send.disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ── Feed container ── */
+
+.moments-feed {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 0 16px;
+}
+
+/* ── Date groups ── */
+
+.moments-date-group {
+  animation: fadeIn var(--dur-normal) var(--ease-smooth);
+}
+
+.moments-date-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-secondary-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 16px 4px;
+  position: sticky;
+  top: 0;
+  background: var(--color-chatlist-bg);
+  z-index: 5;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ── Post card ── */
+
+.moment-post {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.06);
+  animation: fadeInUp 0.3s var(--ease-smooth) both;
+  transition: background var(--dur-fast) var(--ease-smooth);
+}
+
+.moment-post:hover {
+  background: rgba(128, 128, 128, 0.03);
+}
+
+.moment-post-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.moment-author-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.moment-author-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-wechat-green);
+  cursor: pointer;
+  transition: opacity var(--dur-fast) var(--ease-smooth);
+}
+
+.moment-author-name:hover {
+  opacity: 0.8;
+}
+
+.moment-time {
+  font-size: 10px;
+  color: var(--color-secondary-text);
+  margin-top: 1px;
+}
+
+.moment-local-badge {
+  font-size: 9px;
+  color: var(--color-wechat-green);
+  background: rgba(18, 186, 84, 0.1);
+  padding: 1px 6px;
+  border-radius: var(--radius-xs);
+  margin-left: 6px;
+}
+
+/* ── Post content ── */
+
+.moment-content {
+  padding-left: 46px;
+}
+
+.moment-text {
+  font-size: 13px;
+  color: var(--color-primary-text);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-bottom: 6px;
+}
+
+/* ── Image grid ── */
+
+.moment-images {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.moment-images.count-1 { grid-template-columns: 1fr; max-width: 200px; }
+.moment-images.count-2 { grid-template-columns: 1fr 1fr; max-width: 240px; }
+.moment-images.count-3 { grid-template-columns: 1fr 1fr 1fr; max-width: 240px; }
+
+.moment-image-placeholder {
+  aspect-ratio: 1;
+  background: rgba(128, 128, 128, 0.08);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moment-image-placeholder svg {
+  opacity: 0.3;
+}
+
+/* ── Link card ── */
+
+.moment-link-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: rgba(128, 128, 128, 0.06);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-smooth);
+}
+
+.moment-link-card:hover {
+  background: rgba(128, 128, 128, 0.12);
+}
+
+.moment-link-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: rgba(18, 186, 84, 0.1);
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moment-link-title {
+  font-size: 12px;
+  color: var(--color-primary-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+/* ── Actions bar ── */
+
+.moment-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.moment-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px;
+  border-radius: var(--radius-xs);
+  font-size: 11px;
+  color: var(--color-secondary-text);
+  transition: background var(--dur-fast) var(--ease-smooth), color var(--dur-fast) var(--ease-smooth), transform var(--dur-fast) var(--ease-spring);
+}
+
+.moment-action-btn:hover {
+  background: rgba(128, 128, 128, 0.1);
+  color: var(--color-primary-text);
+}
+
+.moment-action-btn:active {
+  transform: scale(0.9);
+}
+
+.moment-action-btn.liked {
+  color: #e74c3c;
+}
+
+.moment-action-btn.liked svg {
+  animation: heartPulse 0.4s var(--ease-spring);
+}
+
+@keyframes heartPulse {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.3); }
+  60% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+/* ── Likes row ── */
+
+.moment-likes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--color-wechat-green);
+  flex-wrap: wrap;
+}
+
+.moment-likes svg {
+  flex-shrink: 0;
+}
+
+.moment-like-name {
+  font-weight: 500;
+}
+
+.moment-like-separator {
+  color: var(--color-secondary-text);
+}
+
+/* ── Comments ── */
+
+.moment-comments {
+  margin-top: 4px;
+  padding: 4px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.moment-comment {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--color-primary-text);
+  animation: fadeIn var(--dur-fast) var(--ease-smooth);
+}
+
+.moment-comment-author {
+  color: var(--color-wechat-green);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.moment-comment-text {
+  color: var(--color-primary-text);
+}
+
+/* ── Comment input ── */
+
+.moment-comment-input-wrap {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+  animation: fadeIn var(--dur-fast) var(--ease-smooth);
+}
+
+.moment-comment-input {
+  flex: 1;
+  border: 1px solid rgba(128, 128, 128, 0.12);
+  border-radius: var(--radius-sm);
+  padding: 3px 8px;
+  font-size: 11px;
+  color: var(--color-primary-text);
+  background: rgba(128, 128, 128, 0.06);
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease-smooth);
+}
+
+.moment-comment-input:focus {
+  border-color: rgba(18, 186, 84, 0.3);
+}
+
+.moment-comment-send {
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--color-wechat-green);
+  color: #fff;
+  font-size: 10px;
+  transition: background var(--dur-fast) var(--ease-smooth), transform var(--dur-fast) var(--ease-spring);
+}
+
+.moment-comment-send:hover {
+  background: var(--color-wechat-dark-green);
+}
+
+.moment-comment-send:active {
+  transform: scale(0.9);
+}
+
+/* ── Likes + Comments container ── */
+
+.moment-social {
+  background: rgba(128, 128, 128, 0.04);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  margin-top: 4px;
+}
+
+/* ── Empty state ── */
+
+.moments-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 40px 16px;
+  color: var(--color-secondary-text);
+  animation: fadeIn var(--dur-slow) var(--ease-smooth);
+}
+
+.moments-empty-icon {
+  opacity: 0.15;
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.moments-empty p {
+  font-size: 13px;
+  text-align: center;
+}

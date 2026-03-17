@@ -1,0 +1,209 @@
+.chat-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-row {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  position: relative;
+  transition:
+    background var(--dur-normal) var(--ease-smooth),
+    transform var(--dur-fast) var(--ease-spring);
+  animation: fadeIn var(--dur-normal) var(--ease-smooth);
+  animation-fill-mode: both;
+}
+
+/* Stagger entrance for first 20 rows */
+.chat-row:nth-child(1) { animation-delay: 0.02s; }
+.chat-row:nth-child(2) { animation-delay: 0.04s; }
+.chat-row:nth-child(3) { animation-delay: 0.06s; }
+.chat-row:nth-child(4) { animation-delay: 0.08s; }
+.chat-row:nth-child(5) { animation-delay: 0.10s; }
+.chat-row:nth-child(6) { animation-delay: 0.12s; }
+.chat-row:nth-child(7) { animation-delay: 0.14s; }
+.chat-row:nth-child(8) { animation-delay: 0.16s; }
+.chat-row:nth-child(9) { animation-delay: 0.18s; }
+.chat-row:nth-child(10) { animation-delay: 0.20s; }
+
+.chat-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--color-wechat-green);
+  border-radius: 0 3px 3px 0;
+  transform: scaleY(0);
+  transition: transform var(--dur-normal) var(--ease-spring);
+}
+
+.chat-row.selected {
+  background: var(--color-chatlist-selected);
+}
+
+.chat-row.selected::before {
+  transform: scaleY(0.6);
+}
+
+.chat-row.hovered:not(.selected) {
+  background: var(--color-chatlist-hover);
+}
+
+.chat-row:active {
+  transform: scale(0.98);
+  transition: transform 0.08s ease;
+}
+
+.chat-row-avatar {
+  position: relative;
+  flex-shrink: 0;
+  transition: transform var(--dur-normal) var(--ease-spring);
+}
+
+.chat-row:hover .chat-row-avatar {
+  transform: scale(1.05);
+}
+
+.chat-row-avatar .badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--color-badge-red);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 600;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  animation: fadeInScale 0.3s var(--ease-spring);
+  box-shadow: 0 1px 4px rgba(250, 69, 59, 0.35);
+}
+
+.chat-row-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.chat-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-row-name {
+  font-size: 13px;
+  color: var(--color-primary-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color var(--dur-normal) var(--ease-smooth);
+}
+
+.chat-row-time {
+  font-size: 10px;
+  color: var(--color-secondary-text);
+  flex-shrink: 0;
+  margin-left: 8px;
+  transition: color var(--dur-normal) var(--ease-smooth);
+}
+
+.chat-row-preview {
+  font-size: 11px;
+  color: var(--color-secondary-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color var(--dur-normal) var(--ease-smooth);
+}
+
+/* ── Pinned indicator ── */
+
+.chat-row.pinned {
+  background: rgba(18, 186, 84, 0.03);
+}
+
+.pin-indicator {
+  font-size: 10px;
+  margin-right: 2px;
+}
+
+/* ── Unread filter button ── */
+
+.unread-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 4px 12px 2px;
+  padding: 3px 8px;
+  font-size: 10px;
+  border-radius: var(--radius-md);
+  background: rgba(128, 128, 128, 0.1);
+  color: var(--color-secondary-text);
+  transition: all var(--dur-normal) var(--ease-smooth);
+  animation: fadeIn var(--dur-fast) var(--ease-smooth);
+}
+
+.unread-filter-btn:hover {
+  background: rgba(128, 128, 128, 0.18);
+}
+
+.unread-filter-btn.active {
+  background: rgba(18, 186, 84, 0.12);
+  color: var(--color-wechat-green);
+}
+
+/* ── Context menu ── */
+
+.context-menu {
+  position: fixed;
+  z-index: 1000;
+  background: var(--color-chatlist-bg);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-md);
+  padding: 4px 0;
+  min-width: 150px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  animation: fadeInScale 0.15s var(--ease-spring);
+  transform-origin: top left;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--color-primary-text);
+  text-align: left;
+  transition: background var(--dur-fast) var(--ease-smooth);
+}
+
+.context-menu-item:hover {
+  background: rgba(128, 128, 128, 0.12);
+}
+
+/* ── Hidden / dimmed chats ── */
+
+.chat-row.dimmed {
+  opacity: 0.55;
+}
+
+.chat-row.dimmed .chat-row-name::before {
+  content: '🔒 ';
+  font-size: 10px;
+}
